@@ -290,4 +290,9 @@ class Webhooks extends ApplicationObject
 
 		return $object;
 	}
+	
+	public function getModelName($underscore = false, $singular = false)
+    {
+    	throw new NotImplementedError(__METHOD__);
+    }
 }
