@@ -20,7 +20,7 @@ class WebhooksModule extends AngieModule
 	 *
 	 * @var string
 	 */
-	protected $version = '1.0.416';
+	protected $version = '1.0.4013';
 
 	// ---------------------------------------------------
 	//  Events and Routes
