@@ -33,7 +33,7 @@ class WHDataManager extends DataManager
 	 */
 	public static function getInstanceClassName()
 	{
-		return __CLASS__;
+		return 'Webhooks';
 	}
 
 	/**
