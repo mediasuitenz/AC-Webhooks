@@ -1,3 +1,5 @@
+ActiveCollab 4 compatibilty and module updates by KRDS (http://www.krds.com)
+
 Copyright ©, Sumo Coders. 
 [www.sumocoders.be](http://www.sumocoders.be)
 All rights reserved.
