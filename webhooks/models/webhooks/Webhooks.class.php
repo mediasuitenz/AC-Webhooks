@@ -63,6 +63,8 @@ class Webhooks extends ApplicationObject
 			$options[CURLOPT_SSL_VERIFYHOST] = false;
 			$options[CURLOPT_POST] = true;
 			$options[CURLOPT_POSTFIELDS]['event'] = $event;
+			$options[CURLOPT_RETURNTRANSFER] = true; 
+
 			if(!empty($args))
 				$options[CURLOPT_POSTFIELDS]['data'] = @serialize($args);
 
