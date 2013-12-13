@@ -16,6 +16,6 @@ The Webhooks module enables you to call an external page on an event-base.
 * Decide on which event you want to hook
 * Create a page that will handle the call, each call will have two POST-variables:
 	* event: the event that was called
-	* data: the data that was passed through the listener, it is [serialized](http://php.net/serialize) as a PHP-array.
+	* data: the data that was passed through the listener, encoded as json
 * Enter the url of the page next to the event and check the checkbox to enable it
 * Done

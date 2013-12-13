@@ -66,7 +66,7 @@ class Webhooks extends ApplicationObject
 			$options[CURLOPT_RETURNTRANSFER] = true; 
 
 			if(!empty($args))
-				$options[CURLOPT_POSTFIELDS]['data'] = @serialize($args);
+				$options[CURLOPT_POSTFIELDS]['data'] = json_encode($args);
 
 			// init
 			$curl = curl_init();
