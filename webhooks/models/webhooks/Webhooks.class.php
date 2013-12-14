@@ -65,8 +65,19 @@ class Webhooks extends ApplicationObject
 			$options[CURLOPT_POSTFIELDS]['event'] = $event;
 			$options[CURLOPT_RETURNTRANSFER] = true; 
 
-			if(!empty($args))
-				$options[CURLOPT_POSTFIELDS]['data'] = json_encode($args);
+			if(!empty($args)) {
+				
+				$object = $args[0];
+				if (get_class($object) !== 'TimeRecord') {
+					return;
+				}
+				$data = array();
+				$data['time_record'] = $object->getAttributes();
+
+				$options[CURLOPT_POSTFIELDS]['data'] = json_encode($data);
+			} else {
+				return;
+			}
 
 			// init
 			$curl = curl_init();
