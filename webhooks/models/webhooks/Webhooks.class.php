@@ -61,6 +61,30 @@ class Webhooks extends ApplicationObject
 				}
 				
 				$data['time_record'] = $object->getAttributes();
+
+				$parentId = $data['time_record']['parent_id'];
+
+				if ($data['time_record']['parent_type'] === 'Task') {
+					$query = 'SELECT * FROM acx_project_objects WHERE id = ' . $data['time_record']['parent_id'] . ' limit 1'; 
+					$result = DB::execute($query);
+					$taskName;
+					foreach ($result as $res) {
+						$taskName = $res['name'];
+						$parentId = $res['project_id'];
+					}
+					$data['time_record']['task_name'] = $taskName;
+				}
+
+				
+				$query = 'SELECT * FROM acx_projects WHERE id = ' . $parentId . ' limit 1'; 
+				$result = DB::execute($query);
+				$projectName;
+				foreach ($result as $res) {
+					$projectName = $res['name'];
+				}
+				$data['time_record']['project_name'] = $projectName;
+
+
 			} else {
 				return;
 			}
