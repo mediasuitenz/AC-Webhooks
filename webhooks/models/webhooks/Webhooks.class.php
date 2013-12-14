@@ -52,6 +52,21 @@ class Webhooks extends ApplicationObject
 		// valid webhook?
 		if($webhook !== null)
 		{
+			$data = array();
+			if(!empty($args)) {
+				
+				$object = $args[0];
+				if (get_class($object) !== 'TimeRecord') {
+					return;
+				}
+				
+				$data['time_record'] = $object->getAttributes();
+			} else {
+				return;
+			}
+
+			$dataString = json_encode(array('event' => $event, 'data' => $data));
+
 			// set options
 			$options[CURLOPT_URL] = $webhook->getCallback();
 			$options[CURLOPT_USERAGENT] = 'ActiveCollab/'.APPLICATION_VERSION.' Webhooks/'.self::VERSION;
@@ -62,22 +77,13 @@ class Webhooks extends ApplicationObject
 			$options[CURLOPT_SSL_VERIFYPEER] = false;
 			$options[CURLOPT_SSL_VERIFYHOST] = false;
 			$options[CURLOPT_POST] = true;
-			$options[CURLOPT_POSTFIELDS]['event'] = $event;
-			$options[CURLOPT_RETURNTRANSFER] = true; 
-
-			if(!empty($args)) {
-				
-				$object = $args[0];
-				if (get_class($object) !== 'TimeRecord') {
-					return;
-				}
-				$data = array();
-				$data['time_record'] = $object->getAttributes();
-
-				$options[CURLOPT_POSTFIELDS]['data'] = json_encode($data);
-			} else {
-				return;
-			}
+			$options[CURLOPT_POSTFIELDS]['data'] = $dataString;
+			$options[CURLOPT_RETURNTRANSFER] = true;
+			$options[CURLOPT_HTTPHEADERS] = array(
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($dataString)
+			);
+			
 
 			// init
 			$curl = curl_init();
